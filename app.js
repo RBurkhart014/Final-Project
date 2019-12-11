@@ -38,10 +38,16 @@ app.post('/find-artist', (req, res) => {
     var artist = req.body.artist;
     fetch ('https://itunes.apple.com/search?term=' + artist.replace(" ", "_")).then(data => data.json()).then(data => {
         // res.send(data);
-        res.render("find-artist.hbs", data)
+        fetch("https://sv443.net/jokeapi/category/Dark").then(res => res.json())
+.then(response => {
+	res.render("find-artist.hbs", {data: data, joke: response})
+})
+.catch(err => {
+	console.log(err);
+});
+
     });
 })
 
 app.listen(port);
 
-//npm start, open your browser and run localhost:port
